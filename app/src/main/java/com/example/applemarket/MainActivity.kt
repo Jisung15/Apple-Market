@@ -162,9 +162,7 @@ class MainActivity : AppCompatActivity() {
 
         builder.setPositiveButton("예", listener)
         builder.setNegativeButton("아니오", null)
-        builder.setOnCancelListener {
-
-        }
+        builder.setOnCancelListener {}
 
         builder.show()
 

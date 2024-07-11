@@ -41,11 +41,11 @@ class MyAdapter(val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Ho
         holder.heart.text = item[position].dHeart.toString()
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
     override fun getItemCount(): Int {
         return item.size
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
     }
 }

@@ -4,7 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Item(val dImage: Int,
+data class Item(
+    val dImage: Int,
     val dTitle: String,
     val dSubTitle: String,
     val dPrice: String,

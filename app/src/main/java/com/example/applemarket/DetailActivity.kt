@@ -9,7 +9,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.applemarket.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
-
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
