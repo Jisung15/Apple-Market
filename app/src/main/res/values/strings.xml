@@ -1,3 +1,41 @@
 <resources>
     <string name="app_name">AppleMarket</string>
+
+    <string name="main_title_text">내배캠동</string>
+
+    <string name="sample1_title">산진 한달된 선풍기 팝니다</string>
+    <string name="sample2_title">김치냉장고</string>
+    <string name="sample3_title">샤넬 카드지갑</string>
+    <string name="sample4_title">금고</string>
+    <string name="sample5_title">갤럭시Z플립3 팝니다.</string>
+    <string name="sample6_title">프라다 복조리백</string>
+    <string name="sample7_title">울산 동해오션뷰 60평 복층 펜트하우스 1일 숙박권 펜션 힐링 숙소 별장</string>
+    <string name="sample8_title">샤넬 탑핸들 가방</string>
+    <string name="sample9_title">4행정 엔진분무기 판매합니다</string>
+    <string name="sample10_title">셀린느 버킷 가방</string>
+
+    <string name="sample1_sub_title">서울 서대문구 창천동</string>
+    <string name="sample2_sub_title">인천 계양구 귤현동</string>
+    <string name="sample3_sub_title">수성구 범어동</string>
+    <string name="sample4_sub_title">해운대구 우제2동</string>
+    <string name="sample5_sub_title">연제구 연산제8동</string>
+    <string name="sample6_sub_title">수원시 영통구 원천동</string>
+    <string name="sample7_sub_title">남구 옥동</string>
+    <string name="sample8_sub_title">동래구 온천제2동</string>
+    <string name="sample9_sub_title">원주시 명륜2동</string>
+    <string name="sample10_sub_title">중구 동화동</string>
+
+    <string name="sample_1_price">1,000원</string>
+    <string name="sample_2_price">20,000원</string>
+    <string name="sample_3_price">10,000원</string>
+    <string name="sample_4_price">10,000원</string>
+    <string name="sample_5_price">150,000원</string>
+    <string name="sample_6_price">50,000원</string>
+    <string name="sample_7_price">150,000원</string>
+    <string name="sample_8_price">180,000원</string>
+    <string name="sample_9_price">30,000원</string>
+    <string name="sample_10_price">190,000원</string>
+
+    <string name="chat">16</string>
+    <string name="heart">25</string>
 </resources>

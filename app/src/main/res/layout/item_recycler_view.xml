@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_view"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:paddingHorizontal="10dp">
+
+    <ImageView
+        android:id="@+id/iv_item_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/sample1"
+        android:scaleType="centerCrop"
+        android:background="@drawable/image_bg"
+        android:clipToOutline="true"
+        tools:ignore="UnusedAttribute" />
+
+    <LinearLayout
+        android:id="@+id/ll_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/tv_main_text"
+            style="@style/main_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample1_title"
+            android:maxLines="2"
+            android:gravity="left|center_vertical"
+            android:ellipsize="end"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_sub_text"
+            style="@style/sub_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample1_sub_title"
+            android:gravity="left|center_vertical"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            style="@style/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sample_1_price"
+            android:gravity="left|center_vertical"
+            tools:ignore="RtlHardcoded" />
+
+        <LinearLayout
+            android:id="@+id/ll_emoji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
+
+            <ImageView
+                android:id="@+id/iv_chat"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:src="@drawable/chat" />
+
+            <TextView
+                android:id="@+id/tv_chat_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:text="@string/chat" />
+
+            <ImageView
+                android:id="@+id/iv_heart"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/heart" />
+
+            <TextView
+                android:id="@+id/tv_heart_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:gravity="center"
+                android:text="@string/heart" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
