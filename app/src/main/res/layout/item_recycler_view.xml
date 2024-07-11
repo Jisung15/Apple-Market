@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_view"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingHorizontal="10dp">
 
@@ -14,10 +14,10 @@
         android:layout_height="100dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:src="@drawable/sample1"
-        android:scaleType="centerCrop"
         android:background="@drawable/image_bg"
         android:clipToOutline="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample1"
         tools:ignore="UnusedAttribute" />
 
     <LinearLayout
@@ -25,19 +25,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_main_text"
             style="@style/main_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sample1_title"
-            android:maxLines="2"
-            android:gravity="left|center_vertical"
             android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:maxLines="2"
+            android:text="@string/sample1_title"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -45,8 +45,8 @@
             style="@style/sub_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sample1_sub_title"
             android:gravity="left|center_vertical"
+            android:text="@string/sample1_sub_title"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -54,8 +54,8 @@
             style="@style/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sample_1_price"
             android:gravity="left|center_vertical"
+            android:text="@string/sample_1_price"
             tools:ignore="RtlHardcoded" />
 
         <LinearLayout

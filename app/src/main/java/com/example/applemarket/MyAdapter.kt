@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.applemarket.databinding.ActivityMainBinding
 import com.example.applemarket.databinding.ItemRecyclerViewBinding
 
-class MyAdapter (val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Holder>() {
-    inner class Holder(val binding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root) {
+class MyAdapter(val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Holder>() {
+    inner class Holder(val binding: ItemRecyclerViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivItemImage
         val mainText = binding.tvMainText
         val subText = binding.tvSubText
@@ -19,10 +20,10 @@ class MyAdapter (val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.H
     }
 
     interface OnClick {
-        fun onClick (view: View, position: Int)
+        fun onClick(view: View, position: Int)
     }
 
-    var click : OnClick? = null
+    var click: OnClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -45,6 +46,7 @@ class MyAdapter (val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.H
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
     override fun getItemCount(): Int {
         return item.size
     }
