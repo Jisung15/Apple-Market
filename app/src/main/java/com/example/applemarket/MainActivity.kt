@@ -3,12 +3,8 @@ package com.example.applemarket
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +13,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.applemarket.databinding.ActivityMainBinding
-import com.example.applemarket.databinding.ItemRecyclerViewBinding
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -167,7 +162,9 @@ class MainActivity : AppCompatActivity() {
 
         builder.setPositiveButton("예", listener)
         builder.setNegativeButton("아니오", null)
-        builder.setOnCancelListener {}
+        builder.setOnCancelListener {
+
+        }
 
         builder.show()
 

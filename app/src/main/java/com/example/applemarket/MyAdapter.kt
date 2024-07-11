@@ -1,11 +1,9 @@
 package com.example.applemarket
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.applemarket.databinding.ActivityMainBinding
 import com.example.applemarket.databinding.ItemRecyclerViewBinding
 
 class MyAdapter(val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Holder>() {
