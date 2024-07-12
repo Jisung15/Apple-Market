@@ -16,7 +16,6 @@ class DetailActivity : AppCompatActivity() {
         const val ITEM = "item"
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
