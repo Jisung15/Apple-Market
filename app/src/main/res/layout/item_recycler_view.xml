@@ -12,11 +12,11 @@
         android:id="@+id/iv_item_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/image_bg"
         android:clipToOutline="true"
-        android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"
         android:src="@drawable/sample1"
         tools:ignore="UnusedAttribute" />
@@ -25,9 +25,9 @@
         android:id="@+id/ll_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_gravity="center_vertical"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 

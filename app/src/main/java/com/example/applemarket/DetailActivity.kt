@@ -11,7 +11,10 @@ import com.example.applemarket.databinding.ActivityDetailBinding
 class DetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
-    companion object { const val ITEM = "item" }
+
+    companion object {
+        const val ITEM = "item"
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".DetailActivity">
 
     <ScrollView
@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/cl_bottom"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_detail_page"
@@ -28,16 +28,16 @@
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/sample2"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_sub_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:background="@drawable/detail_title_bg"
+                android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/iv_detail_image">
 
                 <ImageView
@@ -45,9 +45,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/profile"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_detail_name"
@@ -76,16 +76,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/manner"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/iv_manner_image"/>
+                    app:layout_constraintEnd_toStartOf="@id/iv_manner_image"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/iv_manner_image"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:src="@drawable/manner_icon"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_manner_text"
@@ -122,16 +122,16 @@
         android:id="@+id/fl_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_back_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/back_button"/>
+            android:src="@drawable/back_button" />
 
     </FrameLayout>
 
@@ -139,39 +139,39 @@
         android:id="@+id/cl_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="10dp">
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/iv_bottom_heart"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/heart"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_price"
+            style="@style/bottom_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:text="@string/sample_1_price"
-            app:layout_constraintTop_toTopOf="@id/iv_bottom_heart"
             app:layout_constraintBottom_toBottomOf="@id/iv_bottom_heart"
             app:layout_constraintStart_toEndOf="@id/iv_bottom_heart"
-            android:layout_marginStart="30dp"
-            style="@style/bottom_price"/>
+            app:layout_constraintTop_toTopOf="@id/iv_bottom_heart" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_chat"
+            style="@style/button_message"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/button_message"
             android:background="@drawable/bottom_button_bg"
+            android:text="@string/button_message"
             app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/button_message"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

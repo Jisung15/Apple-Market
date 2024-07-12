@@ -24,7 +24,8 @@ class MyAdapter(val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Ho
     var click: OnClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ItemRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
 
