@@ -11,7 +11,7 @@ class MyAdapter(val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Ho
         RecyclerView.ViewHolder(binding.root) {
         val image = binding.ivItemImage
         val mainText = binding.tvMainText
-        val subText = binding.tvSubText
+        val address = binding.tvAddress
         val price = binding.tvPrice
         val chat = binding.tvChatCount
         val heart = binding.tvHeartCount
@@ -35,7 +35,7 @@ class MyAdapter(val item: MutableList<Item>) : RecyclerView.Adapter<MyAdapter.Ho
 
         holder.image.setImageResource(item[position].dImage)
         holder.mainText.text = item[position].dTitle
-        holder.subText.text = item[position].dSubTitle
+        holder.address.text = item[position].dAddress
         holder.price.text = item[position].dPrice
         holder.chat.text = item[position].dChat.toString()
         holder.heart.text = item[position].dHeart.toString()

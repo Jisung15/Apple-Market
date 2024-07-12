@@ -11,6 +11,8 @@ import com.example.applemarket.databinding.ActivityDetailBinding
 class DetailActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
+    companion object { const val ITEM = "item" }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,9 +24,17 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
-        binding.text.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+        val intent = intent.getParcelableExtra<Item>(ITEM)
+
+        binding.ivDetailImage.setImageResource(intent?.dImage ?: 0)
+        binding.tvDetailName.text = intent?.dName
+        binding.tvDetailAddress.text = intent?.dAddress
+        binding.tvDetailTitle.text = intent?.dTitle
+        binding.tvDetailMessage.text = intent?.dMessage
+        binding.tvPrice.text = intent?.dPrice
+
+        binding.ivBackButton.setOnClickListener {
+            finish()
         }
     }
 }

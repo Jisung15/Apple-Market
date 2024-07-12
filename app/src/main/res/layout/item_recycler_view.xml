@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_view"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:paddingHorizontal="10dp">
 
@@ -16,6 +16,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/image_bg"
         android:clipToOutline="true"
+        android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"
         android:src="@drawable/sample1"
         tools:ignore="UnusedAttribute" />
@@ -23,9 +24,10 @@
     <LinearLayout
         android:id="@+id/ll_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
@@ -41,12 +43,12 @@
             tools:ignore="RtlHardcoded" />
 
         <TextView
-            android:id="@+id/tv_sub_text"
-            style="@style/sub_text"
+            android:id="@+id/tv_address"
+            style="@style/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
-            android:text="@string/sample1_sub_title"
+            android:text="@string/sample1_address"
             tools:ignore="RtlHardcoded" />
 
         <TextView
@@ -69,14 +71,14 @@
             <ImageView
                 android:id="@+id/iv_chat"
                 android:layout_width="15dp"
-                android:layout_height="match_parent"
+                android:layout_height="15dp"
                 android:layout_gravity="center"
                 android:src="@drawable/chat" />
 
             <TextView
                 android:id="@+id/tv_chat_count"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:gravity="center"
                 android:text="@string/chat" />
@@ -84,7 +86,7 @@
             <ImageView
                 android:id="@+id/iv_heart"
                 android:layout_width="15dp"
-                android:layout_height="match_parent"
+                android:layout_height="15dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/heart" />
@@ -92,7 +94,7 @@
             <TextView
                 android:id="@+id/tv_heart_count"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:gravity="center"
                 android:text="@string/heart" />

@@ -7,8 +7,10 @@ import kotlinx.android.parcel.Parcelize
 data class Item(
     val dImage: Int,
     val dTitle: String,
-    val dSubTitle: String,
+    val dAddress: String,
     val dPrice: String,
     val dChat: Int,
-    val dHeart: Int
+    val dHeart: Int,
+    val dName: String,
+    val dMessage: String
 ) : Parcelable
