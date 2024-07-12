@@ -101,6 +101,7 @@
             <TextView
                 android:id="@+id/tv_detail_title"
                 style="@style/detail_title"
+                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sample1_title"
@@ -111,6 +112,7 @@
                 style="@style/detail_message"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="10dp"
                 android:text="@string/detail_message"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_title" />
 
