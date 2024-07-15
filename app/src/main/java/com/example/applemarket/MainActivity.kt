@@ -27,8 +27,9 @@ import com.example.applemarket.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     // DataList와 RecyclerView 어댑터를 변수 선언
-    private val dataList by lazy {mutableListOf<Item>()}
+    private val dataList by lazy { mutableListOf<Item>() }
     private val adapter by lazy { MyAdapter(dataList) }
 
     companion object {
@@ -237,9 +238,6 @@ class MainActivity : AppCompatActivity() {
                 builder.show()
             }
         }
-
-//        binding.recyclerView.adapter = adapter
-//        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         // 알림 설정하는 부분.. 여기는 아직 더 공부가 필요하다.
         binding.ivMainTitleAlarm.setOnClickListener {
