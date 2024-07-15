@@ -3,6 +3,7 @@ package com.example.applemarket
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
+/// 데이터 클래스 (이미지, 아이템 이름, 주소, 가격, 채팅 수, 좋아요 수, 이름, 메세지 등이 담겨 있음)
 @Parcelize
 data class Item(
     val dImage: Int,
