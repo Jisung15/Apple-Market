@@ -6,7 +6,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="main_text">
+    <style name="item_text">
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -20,7 +20,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="detail_text1">
+    <style name="detail_name">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
     </style>

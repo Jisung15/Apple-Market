@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-07-12T09:01:36.874417400Z">
+        <DropdownSelection timestamp="2024-07-15T02:12:08.894432300Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\SeongJin\.android\avd\Nexus_5_API_31_1.avd" />

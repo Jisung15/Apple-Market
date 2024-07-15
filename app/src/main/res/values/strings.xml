@@ -79,14 +79,16 @@
 
     </string>
 
-    <string name="chat">16</string>
-    <string name="heart">25</string>
+    <string name="chat_number">16</string>
+    <string name="heart_number">25</string>
 
-    <string name="manner">39.3</string>
+    <string name="manner_number">39.3</string>
 
     <string name="manner_text">매너온도</string>
 
     <string name="detail_message">이사가서 필요가 없어졌어요 급하게 내놓습니다</string>
 
     <string name="button_message">채팅하기</string>
+
+    <string name="empty">모든 항목이 삭제되었습니다.</string>
 </resources>

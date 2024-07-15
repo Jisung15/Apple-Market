@@ -51,7 +51,7 @@
 
                 <TextView
                     android:id="@+id/tv_detail_name"
-                    style="@style/detail_text1"
+                    style="@style/detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:text="@string/manner"
+                    android:text="@string/manner_number"
                     app:layout_constraintEnd_toStartOf="@id/iv_manner_image"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -154,7 +154,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_price"
+            android:id="@+id/tv_detail_price"
             style="@style/bottom_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
             app:layout_constraintTop_toTopOf="@id/iv_bottom_heart" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_chat"
+            android:id="@+id/btn_chat_button"
             style="@style/button_message"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
