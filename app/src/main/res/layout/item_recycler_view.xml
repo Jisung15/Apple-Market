@@ -21,7 +21,6 @@
     <!--        android:background="@drawable/image_bg"-->
     <!--        android:clipToOutline="true"-->
 
-
     <LinearLayout
         android:id="@+id/ll_item_text"
         android:layout_width="match_parent"
