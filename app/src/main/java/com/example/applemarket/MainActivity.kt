@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        // DetailPage 에서 바뀐 DataList를 받음. 이미 Main을 실행 해서 Detail을 불렀다. 한 번 더 Main을 실행 = 낭비, 그래서 RegisterForActivityResult 사용
+        // DetailPage 에서 바뀐 DataList를 받음. 이미 MainPage를 실행 해서 DetailPage를 불렀다. 그 상태에서 한 번 더 Main을 실행하는 건 낭비이다, 그래서 RegisterForActivityResult 사용
         val resultValue =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
