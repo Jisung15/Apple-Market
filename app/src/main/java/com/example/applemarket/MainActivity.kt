@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    // DataList와 RecyclerView 어댑터를 변수 선언
+    // DataList, RecyclerView Adapter에 대한 변수 선언
     private val dataList by lazy { mutableListOf<Item>() }
     private val adapter by lazy { MyAdapter(dataList) }
 
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        // 어댑터와 RecyclerView 연결
+        // Adapter, RecyclerView 연결
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -180,17 +180,17 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        // DetailActivity에서 바뀐 DataList를 받아온다. 이미 Main을 실행해서 Detail을 불렀으니 한 번 더 Main을 실행하는 거는 낭비이므로, RegisterForActivityResult 사용
+        // DetailPage 에서 바뀐 DataList를 받음. 이미 Main을 실행 해서 Detail을 불렀다. 한 번 더 Main을 실행 = 낭비, 그래서 RegisterForActivityResult 사용
         val resultValue =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     val item = result.data?.getParcelableExtra<Item>(ITEM)
                     updateItem(dataList, item!!)
-                    adapter.notifyDataSetChanged()         // 어댑터의 모든 데이터 업데이트
+                    adapter.notifyDataSetChanged()         // Adapter 모든 데이터 업데이트
                 }
             }
 
-        // 여기는 Main의 DataList를 Detail로 보내는 부분
+        // 여기는 MainPage의 DataList를 DetailPage로 보내는 부분
         adapter.click = object : MyAdapter.OnClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 아이템을 길게 눌러 삭제하는 부분
+        // 아이템 길게 눌러 삭제 하는 부분
         adapter.click2 = object : MyAdapter.LongClick {
             override fun onLongClick(view: View, position: Int) {
                 val builder = AlertDialog.Builder(this@MainActivity)
@@ -217,8 +217,8 @@ class MainActivity : AppCompatActivity() {
                             ).show()
                             dataList.removeAt(position)
                             adapter.notifyItemRemoved(position)
-                            adapter.notifyDataSetChanged()                              // 삭제하고 나면 전체 데이터 업데이트
-                            if (dataList.isEmpty()) {                                  // 모든 아이템이 삭제되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
+                            adapter.notifyDataSetChanged()                              // 삭제 하고 나면 전체 데이터 업데이트
+                            if (dataList.isEmpty()) {                                  // 모든 아이템 삭제 되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
                                 binding.recyclerView.visibility = View.GONE
                                 binding.tvEmpty.visibility = View.VISIBLE
                             } else {
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
 
-                        // 아니오 버튼 누르면 그냥 다이얼로그만 종료
+                        // 아니오 버튼 누르면 그냥 다이얼 로그만 종료
                         DialogInterface.BUTTON_NEGATIVE -> dialog?.dismiss()
                     }
                 }
@@ -239,38 +239,44 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 알림 설정하는 부분.. 여기는 아직 더 공부가 필요하다.
+        // 알림 설정 하는 부분.. 여기는 아직 더 공부가 필요하다.
         binding.ivMainTitleAlarm.setOnClickListener {
             val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
             val builder: NotificationCompat.Builder
+
+            // 채널 생성
             val channelId = "channel"
             val channelName = "My Channel"
             val channel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_DEFAULT                   // 여기는 중요도 설정.. HIGH로 해도 상관은 없지만 일단 DEFAULT로 설정
             ).apply {
                 description = "My Channel One Description"
-                setShowBadge(true)
-                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+                setShowBadge(true)                                                                        // 배지 설정 (알림 하나씩 쌓일 때마다 아이콘 위에 숫자 뜨게)
+
+                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)                // 알림 소리를 기본 소리로 설정
+
+                // 그 기본 알림 소리의 속성을 설정
                 val audioAttributes = AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .build()
-                setSound(uri, audioAttributes)
-                enableVibration(true)
+                setSound(uri, audioAttributes)                                                             // 알림 소리를 audioAttributes 변수에 설정한 소리로 한다는 뜻
+                enableVibration(true)                                                              //     알림 올 때 진동 발생 여부 -> true
+
             }
-            manager.createNotificationChannel(channel)
+            manager.createNotificationChannel(channel)                                                             // 만든 채널 등록
+            builder = NotificationCompat.Builder(this, channelId)                                           // builder 생성
 
-            builder = NotificationCompat.Builder(this, channelId)
-
+            // builder 설정. 여기선 알림에 무슨 내용이 들어갈 지 정하는 것이다.
             builder.setSmallIcon(R.mipmap.ic_launcher)
-            builder.setWhen(System.currentTimeMillis())
+            builder.setWhen(System.currentTimeMillis())                                            // 알림 시간 -> 현재 시간 설정
             builder.setContentTitle("키워드 알림")
             builder.setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")
 
-            manager.notify(11, builder.build())
+            manager.notify(11, builder.build())                                                // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
         }
 
         // floating button 설정 부분
@@ -311,7 +317,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 뒤로 가기 버튼 눌렀을 때 다이얼로그 설정
+    // 뒤로 가기 버튼 눌렀을 때 다이얼 로그 설정
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("종료")
@@ -321,13 +327,13 @@ class MainActivity : AppCompatActivity() {
         val listener = DialogInterface.OnClickListener { dialog, which ->
             when (which) {
                 DialogInterface.BUTTON_POSITIVE -> finish()                                // 예 버튼 누르면 그냥 앱을 종료
-                DialogInterface.BUTTON_NEGATIVE -> dialog?.dismiss()                       // 아니오 버튼 누르면 다이얼로그 종료
+                DialogInterface.BUTTON_NEGATIVE -> dialog?.dismiss()                       // 아니오 버튼 누르면 다이얼 로그 종료
             }
         }
 
         builder.setPositiveButton("예", listener)
         builder.setNegativeButton("아니오", listener)
-        builder.setOnCancelListener {}                                                   // 다이얼로그 띄우기 전에 앱이 종료되지 않게 설정
+        builder.setOnCancelListener {}                                                   // 다이얼 로그 띄우기 전에 앱이 종료 되지 않게 설정
 
         builder.show()
 

@@ -20,7 +20,7 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
 //        val heart = binding.ivHeart
     }
 
-    // 그냥 클릭 리스너 설정
+    // 클릭 리스너 설정
     interface OnClick {
         fun onClick(view: View, position: Int)
     }
@@ -43,7 +43,7 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
     // 본격적으로 설정 시작
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        // 그냥 클릭 리스너
+        // 클릭 리스너
         holder.itemView.setOnClickListener {
             click?.onClick(it, position)
         }
@@ -53,8 +53,8 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
             click2?.onLongClick(it, position); true
         }
 
-        // DataList에 있는 값을 어댑터에 넣어주기 시작
-        // 이걸 RecyclerView로 쭈욱 넣을 것이다.
+        // DataList에 있는 값을 Adapter에 넣어주기 시작
+        // 이것들을 묶어서 item_recycler_view.xml에 넣고, 그걸 RecyclerView로 MainActivity에 쭈욱 넣을 것이다.
         holder.image.setImageResource(item[position].dImage)
         holder.mainText.text = item[position].dItemText
         holder.address.text = item[position].dAddress
@@ -64,7 +64,7 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
 
     }
 
-    // 여기부터는 크기와 위치 설정하는 곳. 지금은 별로 중요하지 않다.
+    // 여기 부분은 크기와 위치 설정. 지금은 별로 중요 하지 않다.
     override fun getItemCount(): Int {
         return item.size
     }
