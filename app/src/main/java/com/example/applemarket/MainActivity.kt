@@ -312,6 +312,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        val item1 = Item(R.mipmap.ic_launcher, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
+
+        binding.ivMainTitleImage.setOnClickListener {
+            Toast.makeText(this, getString(R.string.add_toast_ext), Toast.LENGTH_SHORT).show()
+            dataList.add(0, item1)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     // 좋아요 개수, 이미지 업데이트 하는 부분
