@@ -52,30 +52,30 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_constraintTop_toBottomOf="@+id/cl_main_title_bar"/>
+            app:layout_constraintTop_toBottomOf="@+id/cl_main_title_bar" />
 
         <TextView
             android:id="@+id/tv_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/empty"
             android:gravity="center"
-            android:visibility="gone"
-            android:textSize="18sp"
             android:padding="16dp"
-            android:textColor="@color/black"/>
+            android:text="@string/empty"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:visibility="gone" />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/top"
+        android:layout_marginBottom="20dp"
         android:backgroundTint="@color/white"
-        android:layout_marginBottom="20dp"/>
+        android:src="@drawable/top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="ContentDescription,MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

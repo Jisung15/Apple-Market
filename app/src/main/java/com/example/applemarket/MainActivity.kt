@@ -1,5 +1,6 @@
 package com.example.applemarket
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -32,10 +33,12 @@ class MainActivity : AppCompatActivity() {
     private val dataList by lazy { mutableListOf<Item>() }
     private val adapter by lazy { MyAdapter(dataList) }
 
+    // intent를 사용하기 위해 선언하는 변수
     companion object {
         const val ITEM = "item"
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -173,20 +176,23 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         // 이건 구분선 넣는 코드
-        binding.recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                this,
-                LinearLayoutManager.VERTICAL
-            )
-        )
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
 
         // DetailPage 에서 바뀐 DataList를 받음. 이미 MainPage를 실행 해서 DetailPage를 불렀다. 그 상태에서 한 번 더 Main을 실행하는 건 낭비이다, 그래서 RegisterForActivityResult 사용
         val resultValue =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
                     val item = result.data?.getParcelableExtra<Item>(ITEM)
-                    updateItem(dataList, item!!)
-                    adapter.notifyDataSetChanged()         // Adapter 모든 데이터 업데이트
+                    if (item != null) {
+                        updateItem(dataList, item)
+                        adapter.notifyDataSetChanged()         // Adapter 모든 데이터 업데이트
+                    }
+
+                    // 여기서 DetailActivity를 "다시" 실행하려고 했으나 굳이 그럴 필요가 없다는 결론에 도달 -> 이렇게 주석 처리
+                    // 왜? 굳이 "한 번 더" 실행해야 할까? 아래 adapter.click 코드와 겹쳐서 Detail Page가 두 번 실행된다.
+//                    val intent = Intent(this, DetailActivity::class.java)
+//                    intent.putExtra(ITEM, item)
+//                    startActivity(intent)
                 }
             }
 
@@ -194,13 +200,13 @@ class MainActivity : AppCompatActivity() {
         adapter.click = object : MyAdapter.OnClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra(ITEM, dataList[position])
+                intent.putExtra(ITEM, dataList[position])                                          // 원본 데이터 리스트를 보냄
                 resultValue.launch(intent)
             }
         }
 
         // 아이템 길게 눌러 삭제 하는 부분
-        adapter.click2 = object : MyAdapter.LongClick {
+        adapter.longClick = object : MyAdapter.LongClick {
             override fun onLongClick(view: View, position: Int) {
                 val builder = AlertDialog.Builder(this@MainActivity)
                 builder.setTitle("삭제")
@@ -209,15 +215,15 @@ class MainActivity : AppCompatActivity() {
 
                 val listener = DialogInterface.OnClickListener { dialog, which ->
                     when (which) {
-                        DialogInterface.BUTTON_POSITIVE -> {
-                            Toast.makeText(
-                                this@MainActivity,
+                        DialogInterface.BUTTON_POSITIVE -> {                          // 예 버튼 눌렀을 때
+                            Toast.makeText(this@MainActivity,
                                 "${dataList[position].dItemText} 삭제 완료",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            dataList.removeAt(position)
-                            adapter.notifyItemRemoved(position)
+                                Toast.LENGTH_SHORT).show()                             // 삭제한 아이템 목록을 토스트 메세지로 확인을 시켜 주는 부분
+
+                            dataList.removeAt(position)                                 // 데이터 리스트에서 해당 포지션에 맞는 아이템을 지움
+                            adapter.notifyItemRemoved(position)                        // 어댑터의 아이템(= 메인 페이지에서 스크롤 되는 아이템 목록 중 하나)도 해당되는 포지션에 맞는 걸로 지움
                             adapter.notifyDataSetChanged()                              // 삭제 하고 나면 전체 데이터 업데이트
+
                             if (dataList.isEmpty()) {                                  // 모든 아이템 삭제 되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
                                 binding.recyclerView.visibility = View.GONE
                                 binding.tvEmpty.visibility = View.VISIBLE
@@ -253,7 +259,7 @@ class MainActivity : AppCompatActivity() {
                 channelName,
                 NotificationManager.IMPORTANCE_DEFAULT                   // 여기는 중요도 설정.. HIGH로 해도 상관은 없지만 일단 DEFAULT로 설정
             ).apply {
-                description = "My Channel One Description"
+                description = "My Channel One Description"                                                // 이건 뭔지 모르겠다.. ㅋㅋㅋ
                 setShowBadge(true)                                                                        // 배지 설정 (알림 하나씩 쌓일 때마다 아이콘 위에 숫자 뜨게)
 
                 val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)                // 알림 소리를 기본 소리로 설정
@@ -263,10 +269,10 @@ class MainActivity : AppCompatActivity() {
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .build()
-                setSound(uri, audioAttributes)                                                             // 알림 소리를 audioAttributes 변수에 설정한 소리로 한다는 뜻
-                enableVibration(true)                                                              //     알림 올 때 진동 발생 여부 -> true
-
+                setSound(uri, audioAttributes)                                                             // 알림 소리를 uri와 audioAttributes 변수에 설정한 소리로 한다는 뜻
+                enableVibration(true)                                                              // 알림 올 때 진동 발생 여부 -> true
             }
+
             manager.createNotificationChannel(channel)                                                             // 만든 채널 등록
             builder = NotificationCompat.Builder(this, channelId)                                           // builder 생성
 
@@ -282,42 +288,47 @@ class MainActivity : AppCompatActivity() {
         // floating button 설정 부분
         // 애니메이션도 각각 설정을 해 준다.
         val floatingButton = binding.floatingButton
-        val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
-        val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }
+        val inAnimation = AlphaAnimation(0f, 1f).apply { duration = 500 }
+        val outAnimation = AlphaAnimation(1f, 0f).apply { duration = 500 }
         var isTop = true
 
         // RecyclerView가 스크롤 되었을 때 설정이다.
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!binding.recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {    // 스크롤이 멈춰 있고, 위치가 최상단일 경우
-                    floatingButton.startAnimation(fadeOut)
-                    floatingButton.visibility = View.GONE
+                if (!binding.recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {    // 스크롤이 멈춰 있고, 위치가 최상단일 경우. 항상 최상단부터 스크롤을 하니 이 상태가 기본이다.
+                    floatingButton.startAnimation(outAnimation)                                                                // 페이드 아웃(= 점점 투명해진다) 적용
+                    floatingButton.visibility = View.GONE                                                                      // 버튼을 완전히 숨김
                     isTop = true
-                } else {
+
+                } else {                                                                                                       // 이제부터 스크롤 시작
                     if (isTop) {
-                        floatingButton.visibility = View.VISIBLE
-                        floatingButton.startAnimation(fadeIn)
-                        floatingButton.setOnClickListener {                                              // floating button 누르면 최상단으로 이동
+                        floatingButton.visibility = View.VISIBLE                                                           // isTop이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
+                        floatingButton.startAnimation(inAnimation)                                                         // 페이드 아웃의 반대 설정 적용
+                        floatingButton.setOnClickListener {                                              // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
                             binding.recyclerView.smoothScrollToPosition(0)
                         }
-                        isTop = false
+                        isTop = false                                                                    // false로 isTop을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
                     }
                 }
             }
         })
     }
 
-    // 좋아요 개수 업데이트 하는 부분
-    // 좋아요 이미지 업데이트 하는 코드는 아직...
+    // 좋아요 개수, 이미지 업데이트 하는 부분
+    // 데이터 리스트 안에서 찾는다.
+    // 좋아요 개수가 바뀐 아이템이 뭔지를 찾아서(= 제목은 바뀌지 않으니(직접 수정을 하지 않는 이상) 그걸로 찾는다)
+    // 맞는 아이템을 찾으면 그 아이템의 좋아요 개수, 이미지를 업데이트 한다.
     private fun updateItem(dataList: MutableList<Item>, newItem: Item) {
         for (i in dataList.indices) {
             if (dataList[i].dItemText == newItem.dItemText) {
                 dataList[i].dHeart = newItem.dHeart
+                dataList[i].dHeartCheck = newItem.dHeartCheck
             }
         }
     }
 
     // 뒤로 가기 버튼 눌렀을 때 다이얼 로그 설정
+    // 왜 onBackPressed가 빨간 줄이 뜰까요..? 동작은 잘 되어서 상관은 없긴 하지만... ㅋㅋㅋ
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("종료")
@@ -336,6 +347,5 @@ class MainActivity : AppCompatActivity() {
         builder.setOnCancelListener {}                                                   // 다이얼 로그 띄우기 전에 앱이 종료 되지 않게 설정
 
         builder.show()
-
     }
 }

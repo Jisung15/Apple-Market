@@ -47,7 +47,9 @@
             style="@style/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
             android:gravity="left|center_vertical"
+            android:maxLines="1"
             android:text="@string/sample1_address"
             tools:ignore="RtlHardcoded" />
 

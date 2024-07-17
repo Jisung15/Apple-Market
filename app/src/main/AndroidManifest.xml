@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 이거 한 줄 설정 안 해서 많이 헤맸다... ㅋㅋㅋ -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -14,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppleMarket"
         tools:targetApi="31">
+
         <activity
             android:name=".DetailActivity"
             android:exported="false" />
@@ -26,6 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

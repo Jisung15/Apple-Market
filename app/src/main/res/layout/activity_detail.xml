@@ -55,6 +55,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:ems="9"
+                    android:maxLines="1"
                     android:text="@string/sample_1_name"
                     app:layout_constraintStart_toEndOf="@id/iv_profile_image"
                     app:layout_constraintTop_toTopOf="@id/iv_profile_image" />
@@ -65,6 +68,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:ems="11"
+                    android:maxLines="1"
                     android:text="@string/sample1_address"
                     app:layout_constraintBottom_toBottomOf="@id/iv_profile_image"
                     app:layout_constraintStart_toEndOf="@id/iv_profile_image" />
@@ -101,9 +107,11 @@
             <TextView
                 android:id="@+id/tv_detail_title"
                 style="@style/detail_title"
-                android:padding="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:padding="10dp"
                 android:text="@string/sample1_title"
                 app:layout_constraintTop_toBottomOf="@id/cl_sub_message" />
 
@@ -113,8 +121,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="10dp"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:text="@string/detail_message"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_title" />
+
+            <TextView
+                android:id="@+id/tv_min_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="더보기"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_message"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
