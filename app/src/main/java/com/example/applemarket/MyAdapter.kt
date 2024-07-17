@@ -1,5 +1,6 @@
 package com.example.applemarket
 
+import android.icu.text.DecimalFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,12 +55,15 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
             longClick?.onLongClick(it, position); true
         }
 
+        var dec = DecimalFormat("#,###")
+        var test = item[position].dPrice
+
         // DataList에 있는 값을 Adapter에 넣어주기 시작
         // 이것들을 묶어서 item_recycler_view.xml에 넣고, 그걸 RecyclerView로 MainActivity에 쭈욱 넣을 것이다.
         holder.image.setImageResource(item[position].dImage)
         holder.mainText.text = item[position].dItemText
         holder.address.text = item[position].dAddress
-        holder.price.text = item[position].dPrice
+        holder.price.text = "${dec.format(test)}원"
         holder.chat.text = item[position].dChat.toString()
         holder.heartCount.text = item[position].dHeart.toString()
 

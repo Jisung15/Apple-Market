@@ -1,6 +1,7 @@
 package com.example.applemarket
 
 import android.content.Intent
+import android.icu.text.DecimalFormat
 import com.google.android.material.snackbar.Snackbar
 import android.os.Bundle
 import android.view.View
@@ -33,13 +34,16 @@ class DetailActivity : AppCompatActivity() {
         // DataList -> MainActivity 에서 받아옴
         val item = intent.getParcelableExtra<Item>(ITEM)
 
+        var dec = DecimalFormat("#,###")
+        var test = item?.dPrice
+
         // 그 받아온 DataList 에서 값을 꺼내서 각각의 위젯에 적용
         binding.ivDetailImage.setImageResource(item?.dImage ?: 0)
         binding.tvDetailName.text = item?.dName
         binding.tvDetailAddress.text = item?.dAddress
         binding.tvDetailTitle.text = item?.dItemText
         binding.tvDetailMessage.text = item?.dMessage
-        binding.tvDetailPrice.text = item?.dPrice
+        binding.tvDetailPrice.text = "${dec.format(test)}원"
 
         // 좋아요 개수 변경을 확인 하기 위한 변수
         var count: Int = item?.dHeart ?: 0          // 이건 좋아요 개수 인데 DetailPage에 표시하는 건 아니지만, 나중에 필요하니 여기로 따로 빼놓음
@@ -76,21 +80,21 @@ class DetailActivity : AppCompatActivity() {
         // 이거 if문에 3줄 초과로 하면 긴 텍스트 같은 거 볼 때 더보기 버튼 아예 안 보인다.. ㅠㅠ
         // 일정 줄 수 미만인 경우는 더보기 버튼이 아예 안 보여야 하니... 참 어렵다..
         binding.tvDetailMessage.post {
-            if (binding.tvDetailMessage.maxLines >= 3) binding.tvMaxLine.visibility = View.VISIBLE
+            if (binding.tvDetailMessage.maxLines >= 3) binding.tvShowDetailButton.visibility = View.VISIBLE
         }
 
         // 더보기 버튼 눌렀는지 확인하기 위한 변수
         var checkDetail = false
 
         // 더보기 버튼 눌렀을 때 설정
-        binding.tvMaxLine.setOnClickListener {
+        binding.tvShowDetailButton.setOnClickListener {
             checkDetail = !checkDetail                                       // 이거  안 써주면 에러 나던데 왜 그런지는 모르겠다.. ㅋ
             if (checkDetail) {
                 binding.tvDetailMessage.maxLines = Int.MAX_VALUE
-                binding.tvMaxLine.text = "접기"
+                binding.tvShowDetailButton.text = "접기"
             } else {
                 binding.tvDetailMessage.maxLines = 3
-                binding.tvMaxLine.text = "더보기"
+                binding.tvShowDetailButton.text = "더보기"
             }
         }
 

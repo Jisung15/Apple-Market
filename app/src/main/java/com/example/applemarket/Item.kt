@@ -9,7 +9,7 @@ data class Item(
     val dImage: Int,
     val dItemText: String,
     val dAddress: String,
-    val dPrice: String,
+    val dPrice: Int,
     val dChat: Int,
     var dHeart: Int,
     val dName: String,
