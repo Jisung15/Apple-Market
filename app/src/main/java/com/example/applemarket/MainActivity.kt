@@ -313,8 +313,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        val item1 = Item(R.mipmap.ic_launcher, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
+        // Sample Data
+        val item1 = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
 
+        // 그 Sample Data를 버튼 누르면 추가하게 하는 코드
         binding.ivMainTitleImage.setOnClickListener {
             Toast.makeText(this, getString(R.string.add_toast_ext), Toast.LENGTH_SHORT).show()
             dataList.add(0, item1)
