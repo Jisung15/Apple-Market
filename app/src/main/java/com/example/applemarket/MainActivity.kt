@@ -318,6 +318,8 @@ class MainActivity : AppCompatActivity() {
     // 데이터 리스트 안에서 찾는다.
     // 좋아요 개수가 바뀐 아이템이 뭔지를 찾아서(= 제목은 바뀌지 않으니(직접 수정을 하지 않는 이상) 그걸로 찾는다)
     // 맞는 아이템을 찾으면 그 아이템의 좋아요 개수, 이미지를 업데이트 한다.
+    // 근데 "dHeartCheck는 이미지가 아닌데?" 라는 의문을 가질 수 있지만 어댑터에서 이미지를 맞춰서 바꿔 준다. 걱정 NoNo
+    // Detail Page에서 했던 건 Detail Page의 하트 이미지를 바꾸는 것이고, 우리 Main Page의 하트 이미지는 어댑터에 있으니... ㅋㅋㅋ
     private fun updateItem(dataList: MutableList<Item>, newItem: Item) {
         for (i in dataList.indices) {
             if (dataList[i].dItemText == newItem.dItemText) {

@@ -72,7 +72,6 @@ class DetailActivity : AppCompatActivity() {
         // 이거는 보너스. Detail Page의 tvDetailMessage가 3줄 이상일 때 더보기 버튼 보이고, 3줄 미만이면 숨기기
         // 왜 그런 건지는 잘 모르겠지만 이 코드를 써 주어야 더보기/접기 버튼이 잘 동작한다.
         // 더보기 버튼의 숨김/보이기 설정은 Detail Page의 tvDetailMessage 텍스트 줄 수에 따라 결정된다.
-        // 이거 안 썼다고 엄청 헤맸다.
         // 근데 이거 3줄 미만일 때는 더보기 버튼 숨겨져야 하는데 실행을 시키면 더보기 버튼 보여진다..? 분명 기본 설정 GONE인데..? 참 이상하다.
         // 이거 if문에 3줄 초과로 하면 긴 텍스트 같은 거 볼 때 더보기 버튼 아예 안 보인다.. ㅠㅠ
         // 일정 줄 수 미만인 경우는 더보기 버튼이 아예 안 보여야 하니... 참 어렵다..
@@ -85,7 +84,7 @@ class DetailActivity : AppCompatActivity() {
 
         // 더보기 버튼 눌렀을 때 설정
         binding.tvMaxLine.setOnClickListener {
-            checkDetail = !checkDetail
+            checkDetail = !checkDetail                                       // 이거  안 써주면 에러 나던데 왜 그런지는 모르겠다.. ㅋ
             if (checkDetail) {
                 binding.tvDetailMessage.maxLines = Int.MAX_VALUE
                 binding.tvMaxLine.text = "접기"
