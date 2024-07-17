@@ -77,21 +77,21 @@ class DetailActivity : AppCompatActivity() {
         // 이거 if문에 3줄 초과로 하면 긴 텍스트 같은 거 볼 때 더보기 버튼 아예 안 보인다.. ㅠㅠ
         // 일정 줄 수 미만인 경우는 더보기 버튼이 아예 안 보여야 하니... 참 어렵다..
         binding.tvDetailMessage.post {
-            if (binding.tvDetailMessage.maxLines >= 3) binding.tvMinLine.visibility = View.VISIBLE
+            if (binding.tvDetailMessage.maxLines >= 3) binding.tvMaxLine.visibility = View.VISIBLE
         }
 
         // 더보기 버튼 눌렀는지 확인하기 위한 변수
         var checkDetail = false
 
         // 더보기 버튼 눌렀을 때 설정
-        binding.tvMinLine.setOnClickListener {
+        binding.tvMaxLine.setOnClickListener {
             checkDetail = !checkDetail
             if (checkDetail) {
                 binding.tvDetailMessage.maxLines = Int.MAX_VALUE
-                binding.tvMinLine.text = "접기"
+                binding.tvMaxLine.text = "접기"
             } else {
                 binding.tvDetailMessage.maxLines = 3
-                binding.tvMinLine.text = "더보기"
+                binding.tvMaxLine.text = "더보기"
             }
         }
 
