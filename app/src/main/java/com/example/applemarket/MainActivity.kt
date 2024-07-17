@@ -317,7 +317,7 @@ class MainActivity : AppCompatActivity() {
         val item1 = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
 
         // 그 Sample Data를 버튼 누르면 아이템에 추가하게 하고, 그 아이템을 RecyclerView 맨 위에 추가하는 코드
-        binding.ivMainTitleImage.setOnClickListener {
+        binding.addButton.setOnClickListener {
             Toast.makeText(this, getString(R.string.add_toast_ext), Toast.LENGTH_SHORT).show()
             dataList.add(0, item1)
             adapter.notifyDataSetChanged()

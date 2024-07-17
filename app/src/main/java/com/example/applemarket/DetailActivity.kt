@@ -34,8 +34,8 @@ class DetailActivity : AppCompatActivity() {
         // DataList -> MainActivity 에서 받아옴
         val item = intent.getParcelableExtra<Item>(ITEM)
 
-        var dec = DecimalFormat("#,###")
-        var test = item?.dPrice
+        var format = DecimalFormat("#,###")
+        var price = item?.dPrice
 
         // 그 받아온 DataList 에서 값을 꺼내서 각각의 위젯에 적용
         binding.ivDetailImage.setImageResource(item?.dImage ?: 0)
@@ -43,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDetailAddress.text = item?.dAddress
         binding.tvDetailTitle.text = item?.dItemText
         binding.tvDetailMessage.text = item?.dMessage
-        binding.tvDetailPrice.text = "${dec.format(test)}원"
+        binding.tvDetailPrice.text = "${format.format(price)}원"
 
         // 좋아요 개수 변경을 확인 하기 위한 변수
         var count: Int = item?.dHeart ?: 0          // 이건 좋아요 개수 인데 DetailPage에 표시하는 건 아니지만, 나중에 필요하니 여기로 따로 빼놓음
