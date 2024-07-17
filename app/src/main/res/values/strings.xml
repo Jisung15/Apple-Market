@@ -25,17 +25,6 @@
     <string name="sample9_address">원주시 명륜2동</string>
     <string name="sample10_address">중구 동화동</string>
 
-    <string name="sample_1_price">1,000원</string>
-    <string name="sample_2_price">20,000원</string>
-    <string name="sample_3_price">10,000원</string>
-    <string name="sample_4_price">10,000원</string>
-    <string name="sample_5_price">150,000원</string>
-    <string name="sample_6_price">50,000원</string>
-    <string name="sample_7_price">150,000원</string>
-    <string name="sample_8_price">180,000원</string>
-    <string name="sample_9_price">30,000원</string>
-    <string name="sample_10_price">190,000원</string>
-
     <string name="sample_1_name">대현동</string>
     <string name="sample_2_name">안마담</string>
     <string name="sample_3_name">코코유</string>
