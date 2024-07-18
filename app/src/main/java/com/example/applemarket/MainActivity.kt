@@ -340,7 +340,6 @@ class MainActivity : AppCompatActivity() {
 
     // 뒤로 가기 버튼 눌렀을 때 다이얼 로그 설정
     // 왜 onBackPressed가 빨간 줄이 뜰까요..? 동작은 잘 되어서 상관은 없긴 하지만... ㅋㅋㅋ
-    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
