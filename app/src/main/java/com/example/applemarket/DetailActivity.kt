@@ -5,14 +5,11 @@ import android.content.Intent
 import android.icu.text.DecimalFormat
 import com.google.android.material.snackbar.Snackbar
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.applemarket.databinding.ActivityDetailBinding
-import kotlin.math.max
 
 class DetailActivity : AppCompatActivity() {
 
