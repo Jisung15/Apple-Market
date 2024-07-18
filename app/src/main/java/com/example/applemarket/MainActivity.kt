@@ -172,8 +172,10 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Adapter, RecyclerView 연결
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        with(binding) {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        }
 
         // 이건 구분선 넣는 코드
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
@@ -246,6 +248,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 알림 설정 하는 부분.. 여기는 아직 더 공부가 필요하다.
+        // 알림 소리 안 들리게 하려면 어떻게 해야 할까요..?
         binding.ivMainTitleAlarm.setOnClickListener {
             val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
@@ -257,7 +260,7 @@ class MainActivity : AppCompatActivity() {
             val channel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_DEFAULT                   // 여기는 중요도 설정.. HIGH로 해도 상관은 없지만 일단 DEFAULT로 설정
+                NotificationManager.IMPORTANCE_DEFAULT                                                    // 여기는 중요도 설정.. HIGH로 해도 상관은 없지만 일단 DEFAULT로 설정
             ).apply {
                 description = "My Channel One Description"                                                // 이건 뭔지 모르겠다.. ㅋㅋㅋ
                 setShowBadge(true)                                                                        // 배지 설정 (알림 하나씩 쌓일 때마다 아이콘 위에 숫자 뜨게)
@@ -273,16 +276,16 @@ class MainActivity : AppCompatActivity() {
                 enableVibration(true)                                                              // 알림 올 때 진동 발생 여부 -> true
             }
 
-            manager.createNotificationChannel(channel)                                                             // 만든 채널 등록
-            builder = NotificationCompat.Builder(this, channelId)                                           // builder 생성
+            manager.createNotificationChannel(channel)                                                     // 만든 채널 등록
+            builder = NotificationCompat.Builder(this, channelId)                                   // builder 생성
 
             // builder 설정. 여기선 알림에 무슨 내용이 들어갈 지 정하는 것이다.
             builder.setSmallIcon(R.mipmap.ic_launcher)
-            builder.setWhen(System.currentTimeMillis())                                            // 알림 시간 -> 현재 시간 설정
+            builder.setWhen(System.currentTimeMillis())                                                     // 알림 시간 -> 현재 시간 설정
             builder.setContentTitle("키워드 알림")
             builder.setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")
 
-            manager.notify(11, builder.build())                                                // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
+            manager.notify(11, builder.build())                                                          // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
         }
 
         // floating button 설정 부분
@@ -302,12 +305,12 @@ class MainActivity : AppCompatActivity() {
 
                 } else {                                                                                                       // 이제부터 스크롤 시작
                     if (isTop) {
-                        floatingButton.visibility = View.VISIBLE                                                           // isTop이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
-                        floatingButton.startAnimation(inAnimation)                                                         // 페이드 아웃의 반대 설정 적용
-                        floatingButton.setOnClickListener {                                              // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
+                        floatingButton.visibility = View.VISIBLE                                                               // isTop이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
+                        floatingButton.startAnimation(inAnimation)                                                             // 페이드 아웃의 반대 설정 적용
+                        floatingButton.setOnClickListener {                                                                    // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
                             binding.recyclerView.smoothScrollToPosition(0)
                         }
-                        isTop = false                                                                    // false로 isTop을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
+                        isTop = false                                                                                          // false로 isTop을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
                     }
                 }
             }
@@ -318,7 +321,7 @@ class MainActivity : AppCompatActivity() {
 
         // 그 Sample Data를 버튼 누르면 아이템에 추가하게 하고, 그 아이템을 RecyclerView 맨 위에 추가하는 코드
         binding.addButton.setOnClickListener {
-            Toast.makeText(this, getString(R.string.add_toast_ext), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "상품이 추가되었습니다.", Toast.LENGTH_SHORT).show()
             dataList.add(0, item1)
             adapter.notifyDataSetChanged()
         }
@@ -341,6 +344,8 @@ class MainActivity : AppCompatActivity() {
 
     // 뒤로 가기 버튼 눌렀을 때 다이얼 로그 설정
     // 왜 onBackPressed가 빨간 줄이 뜰까요..? 동작은 잘 되어서 상관은 없긴 하지만... ㅋㅋㅋ
+    @Deprecated("This method has been deprecated in favor of using the\n      {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n      The OnBackPressedDispatcher controls how back button events are dispatched\n      to one or more {@link OnBackPressedCallback} objects.")
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("종료")

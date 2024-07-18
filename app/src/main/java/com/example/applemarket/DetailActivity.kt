@@ -1,5 +1,6 @@
 package com.example.applemarket
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.icu.text.DecimalFormat
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +22,7 @@ class DetailActivity : AppCompatActivity() {
         const val ITEM = "item"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -46,7 +48,7 @@ class DetailActivity : AppCompatActivity() {
         binding.tvDetailPrice.text = "${format.format(price)}원"
 
         // 좋아요 개수 변경을 확인 하기 위한 변수
-        var count: Int = item?.dHeart ?: 0          // 이건 좋아요 개수 인데 DetailPage에 표시하는 건 아니지만, 나중에 필요하니 여기로 따로 빼놓음
+        var count: Int = item?.dHeart ?: 0                                                                 // 이건 좋아요 개수 인데 DetailPage에 표시하는 건 아니지만, 나중에 필요하니 여기로 따로 빼놓음
 
         // Main에서 좋아요가 빈 하트인 상태로(false) 넘어오면 기본 하트 상태는 빈 하트
         // 빨간 하트 상태로(true) 넘어오면 기본 하트 상태도 빨간 하트

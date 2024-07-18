@@ -174,14 +174,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/divider"
+            android:id="@+id/bottom_divider"
             android:layout_width="1dp"
             android:layout_height="35dp"
             android:layout_marginStart="20dp"
-            app:layout_constraintStart_toEndOf="@id/iv_bottom_heart"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@color/gray"/>
+            app:layout_constraintStart_toEndOf="@id/iv_bottom_heart"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_detail_price"
@@ -191,7 +191,7 @@
             android:layout_marginStart="20dp"
             android:text="@string/sample_1_price"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintStart_toEndOf="@id/bottom_divider"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton

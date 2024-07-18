@@ -1,5 +1,6 @@
 package com.example.applemarket
 
+import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,7 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
     }
 
     // 본격적으로 Holder 설정 시작
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         // 클릭 리스너
