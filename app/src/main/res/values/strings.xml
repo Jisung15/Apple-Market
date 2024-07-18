@@ -94,4 +94,6 @@
     <string name="delete_text">정말로 이 상품을 삭제하시겠습니까?</string>
     <string name="iten_plus_text">상품이 추가되었습니다.</string>
     <string name="alarm_text">설정한 키워드에 대한 알림이 도착했습니다!!</string>
+
+    <string name="item_add_button_text">아이템 추가</string>
 </resources>

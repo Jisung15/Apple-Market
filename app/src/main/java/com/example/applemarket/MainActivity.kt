@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity() {
             builder.setSmallIcon(R.mipmap.ic_launcher)
             builder.setWhen(System.currentTimeMillis())                                                     // 알림 시간 -> 현재 시간 설정
             builder.setContentTitle("키워드 알림")
-            builder.setContentText(R.string.alarm_text.toString())
+            builder.setContentText(R.string.alarm_text.toString())                                          // 이건 왜 .toString()일까요..?
 
             manager.notify(11, builder.build())                                                          // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
         }
@@ -317,8 +317,8 @@ class MainActivity : AppCompatActivity() {
         // notifyItemInserted가 그걸 도와준다... (처음 알았네요)
         binding.addButton.setOnClickListener {
             Toast.makeText(this, R.string.iten_plus_text, Toast.LENGTH_SHORT).show()
-            dataList.add(0, newItem)
             binding.tvEmpty.visibility = View.GONE
+            dataList.add(0, newItem)
             adapter.notifyItemInserted(0)
             adapter.notifyDataSetChanged()
         }
