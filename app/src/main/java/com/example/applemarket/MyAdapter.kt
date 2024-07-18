@@ -70,15 +70,21 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
         holder.heartCount.text = item[position].dHeart.toString()
 
         // 좋아요 이미지 설정
-        // 좋아요 버튼을 누르지 않은 상태(false)이면 그냥 빈 하트 설정...인데 왜 heart_full일까? 왜냐하면 Boolean은 true부터 시작 하기 때문이다. heart 이미지를 else에 안 쓰고 if에 쓰려면 if문 조건 앞에 !를 붙이면 된다.
-        // if (!item[position].dHeartCheck) {holder.heart.setImageResource(R.drawable.heart)} else {holder.heart.setImageResource(R.drawable.heart_full)}   <- 바로 이렇게 쓰면 된다. 이것도 테스트 결과 정상적으로 동작함
+        // 좋아요 버튼을 누르지 않은 상태(false)이면 그냥 빈 하트...인데 왜 heart_full일까? 왜냐하면 Boolean은 true부터 시작 하기 때문이다. heart 이미지를 else에 안 쓰고 if에 쓰려면 if문 조건 앞에 !를 붙이면 된다.
         if (item[position].dHeartCheck) {
             holder.heart.setImageResource(R.drawable.heart_full)
         } else {
             holder.heart.setImageResource(R.drawable.heart)
         }
 
-        // 좋아요 개수는 MainPage에서 변화시키지 않고, Detail Page에서 변화시키고 메인에 적용시키는 것이니 일단은 이렇게 작성
+//        위에서 말한 코드가 바로 이것이다. 테스트 결과 정상적으로 동작함
+//        if (!item[position].dHeartCheck) {
+//            holder.heart.setImageResource(R.drawable.heart)
+//        } else {
+//            holder.heart.setImageResource(R.drawable.heart_full)
+//        }
+
+        // 좋아요 개수는 MainPage에서 변화시키지 않고, Detail Page에서 변화시키고 메인에 적용시키는 것이니 이렇게 작성
         holder.heartCount.text = item[position].dHeart.toString()
     }
 

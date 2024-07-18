@@ -26,17 +26,17 @@
                 android:id="@+id/iv_detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/sample2"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_sub_message"
+                android:id="@+id/cl_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/detail_title_bg"
+                android:background="@drawable/detail_profile_bg"
                 android:padding="10dp"
                 app:layout_constraintTop_toBottomOf="@id/iv_detail_image">
 
@@ -113,7 +113,7 @@
                 android:maxLines="2"
                 android:padding="10dp"
                 android:text="@string/sample1_title"
-                app:layout_constraintTop_toBottomOf="@id/cl_sub_message" />
+                app:layout_constraintTop_toBottomOf="@id/cl_profile" />
 
             <TextView
                 android:id="@+id/tv_detail_message"
@@ -142,17 +142,19 @@
 
     <FrameLayout
         android:id="@+id/fl_back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/frame_back_button_bg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_back_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
             android:src="@drawable/back" />
 
     </FrameLayout>
@@ -199,7 +201,7 @@
             style="@style/button_message"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:background="@drawable/bottom_button_bg"
+            android:background="@drawable/detail_bottom_button_bg"
             android:text="@string/button_message"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

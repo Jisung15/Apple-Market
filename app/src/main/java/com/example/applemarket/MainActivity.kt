@@ -189,12 +189,6 @@ class MainActivity : AppCompatActivity() {
                         updateItem(dataList, item)
                         adapter.notifyDataSetChanged()         // Adapter 모든 데이터 업데이트
                     }
-
-                    // 여기서 DetailActivity를 "다시" 실행하려고 했으나 굳이 그럴 필요가 없다는 결론에 도달 -> 이렇게 주석 처리
-                    // 왜? 굳이 "한 번 더" 실행해야 할까? 아래 adapter.click 코드와 겹쳐서 Detail Page가 두 번 실행된다.
-//                    val intent = Intent(this, DetailActivity::class.java)
-//                    intent.putExtra(ITEM, item)
-//                    startActivity(intent)
                 }
             }
 
@@ -220,17 +214,15 @@ class MainActivity : AppCompatActivity() {
                         DialogInterface.BUTTON_POSITIVE -> {                          // 예 버튼 눌렀을 때
                             Toast.makeText(this@MainActivity,
                                 "${dataList[position].dItemText} 삭제 완료",
-                                Toast.LENGTH_SHORT).show()                             // 삭제한 아이템 목록을 토스트 메세지로 확인을 시켜 주는 부분
+                                Toast.LENGTH_SHORT).show()                              // 아이템을 잘 맞게 삭제했는지에 대한 여부를 토스트 메세지로 확인을 시켜 주는 부분
 
                             dataList.removeAt(position)                                 // 데이터 리스트에서 해당 포지션에 맞는 아이템을 지움
-                            adapter.notifyItemRemoved(position)                        // 어댑터의 아이템(= 메인 페이지에서 스크롤 되는 아이템 목록 중 하나)도 해당되는 포지션에 맞는 걸로 지움
+                            adapter.notifyItemRemoved(position)                         // 어댑터의 아이템도 해당되는 포지션에 맞는 걸로 지움
                             adapter.notifyDataSetChanged()                              // 삭제 하고 나면 전체 데이터 업데이트
 
-                            if (dataList.isEmpty()) {                                  // 모든 아이템 삭제 되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
-                                binding.recyclerView.visibility = View.GONE
+                            if (dataList.isEmpty()) {                                   // 모든 아이템이 삭제 되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
                                 binding.tvEmpty.visibility = View.VISIBLE
                             } else {
-                                binding.recyclerView.visibility = View.VISIBLE
                                 binding.tvEmpty.visibility = View.GONE
                             }
                         }
@@ -265,7 +257,7 @@ class MainActivity : AppCompatActivity() {
                 description = "My Channel One Description"                                                // 이건 뭔지 모르겠다.. ㅋㅋㅋ
                 setShowBadge(true)                                                                        // 배지 설정 (알림 하나씩 쌓일 때마다 아이콘 위에 숫자 뜨게)
 
-                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)                // 알림 소리를 기본 소리로 설정
+                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)            // 알림 소리를 기본 소리로 설정
 
                 // 그 기본 알림 소리의 속성을 설정
                 val audioAttributes = AudioAttributes.Builder()
@@ -293,7 +285,7 @@ class MainActivity : AppCompatActivity() {
         val floatingButton = binding.floatingButton
         val inAnimation = AlphaAnimation(0f, 1f).apply { duration = 500 }
         val outAnimation = AlphaAnimation(1f, 0f).apply { duration = 500 }
-        var isTop = true
+        var top = true
 
         // RecyclerView가 스크롤 되었을 때 설정이다.
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -301,28 +293,32 @@ class MainActivity : AppCompatActivity() {
                 if (!binding.recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {    // 스크롤이 멈춰 있고, 위치가 최상단일 경우. 항상 최상단부터 스크롤을 하니 이 상태가 기본이다.
                     floatingButton.startAnimation(outAnimation)                                                                // 페이드 아웃(= 점점 투명해진다) 적용
                     floatingButton.visibility = View.GONE                                                                      // 버튼을 완전히 숨김
-                    isTop = true
+                    top = true
 
                 } else {                                                                                                       // 이제부터 스크롤 시작
-                    if (isTop) {
-                        floatingButton.visibility = View.VISIBLE                                                               // isTop이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
-                        floatingButton.startAnimation(inAnimation)                                                             // 페이드 아웃의 반대 설정 적용
+                    if (top) {
+                        floatingButton.startAnimation(inAnimation)                                                             // 페이드 임(= 점점 불투명해진다) 적용
+                        floatingButton.visibility = View.VISIBLE                                                               // top이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
                         floatingButton.setOnClickListener {                                                                    // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
                             binding.recyclerView.smoothScrollToPosition(0)
                         }
-                        isTop = false                                                                                          // false로 isTop을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
+                        top = false                                                                                          // false로 top을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
                     }
                 }
             }
         })
 
         // 아이템을 추가할 때 쓸 Sample Data
-        val item1 = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
+        val newItem = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
 
-        // 그 Sample Data를 버튼 누르면 아이템에 추가하게 하고, 그 아이템을 RecyclerView 맨 위에 추가하는 코드
+        // 그 Sample Data(=Item 객체 형태의 데이터들)를 버튼 누르면 아이템에 추가하게 하고, 그 아이템(= newItem)을 RecyclerView 맨 위에 추가하는 코드
+        // 아이템을 전부 삭제하고 추가 버튼을 누르면 빈 RecyclerView에 item1을 추가
+        // notifyItemInserted가 그걸 도와준다... (처음 알았어요)
         binding.addButton.setOnClickListener {
             Toast.makeText(this, "상품이 추가되었습니다.", Toast.LENGTH_SHORT).show()
-            dataList.add(0, item1)
+            dataList.add(0, newItem)
+            binding.tvEmpty.visibility = View.GONE
+            adapter.notifyItemInserted(0)
             adapter.notifyDataSetChanged()
         }
     }
