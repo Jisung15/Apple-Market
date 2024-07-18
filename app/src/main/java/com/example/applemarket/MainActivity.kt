@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
             override fun onLongClick(view: View, position: Int) {
                 val builder = AlertDialog.Builder(this@MainActivity)
                 builder.setTitle("삭제")
-                builder.setMessage("정말로 이 상품을 삭제 하시겠습니까?")
+                builder.setMessage(R.string.delete_text)
                 builder.setIcon(R.mipmap.ic_launcher)
 
                 val listener = DialogInterface.OnClickListener { dialog, which ->
@@ -264,7 +264,7 @@ class MainActivity : AppCompatActivity() {
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
                     .setUsage(AudioAttributes.USAGE_ALARM)
                     .build()
-                setSound(uri, audioAttributes)                                                             // 알림 소리를 uri와 audioAttributes 변수에 설정한 소리로 한다는 뜻
+                setSound(uri, audioAttributes)                                                             // 알림 소리를 uri와 audioAttributes 변수에 설정한 소리로 한다는 뜻(?)
                 enableVibration(true)                                                              // 알림 올 때 진동 발생 여부 -> true
             }
 
@@ -275,7 +275,7 @@ class MainActivity : AppCompatActivity() {
             builder.setSmallIcon(R.mipmap.ic_launcher)
             builder.setWhen(System.currentTimeMillis())                                                     // 알림 시간 -> 현재 시간 설정
             builder.setContentTitle("키워드 알림")
-            builder.setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")
+            builder.setContentText(R.string.alarm_text.toString())
 
             manager.notify(11, builder.build())                                                          // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
         }
@@ -297,7 +297,7 @@ class MainActivity : AppCompatActivity() {
 
                 } else {                                                                                                       // 이제부터 스크롤 시작
                     if (top) {
-                        floatingButton.startAnimation(inAnimation)                                                             // 페이드 임(= 점점 불투명해진다) 적용
+                        floatingButton.startAnimation(inAnimation)                                                             // 페이드 인(= 점점 불투명해진다) 적용
                         floatingButton.visibility = View.VISIBLE                                                               // top이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
                         floatingButton.setOnClickListener {                                                                    // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
                             binding.recyclerView.smoothScrollToPosition(0)
@@ -312,10 +312,11 @@ class MainActivity : AppCompatActivity() {
         val newItem = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
 
         // 그 Sample Data(=Item 객체 형태의 데이터들)를 버튼 누르면 아이템에 추가하게 하고, 그 아이템(= newItem)을 RecyclerView 맨 위에 추가하는 코드
+        // 버튼 넣을 공간이 없어서 타이틀의 아래 화살표 ImageView옆에 넣어두었습니다.
         // 아이템을 전부 삭제하고 추가 버튼을 누르면 빈 RecyclerView에 item1을 추가
-        // notifyItemInserted가 그걸 도와준다... (처음 알았어요)
+        // notifyItemInserted가 그걸 도와준다... (처음 알았네요)
         binding.addButton.setOnClickListener {
-            Toast.makeText(this, "상품이 추가되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.iten_plus_text, Toast.LENGTH_SHORT).show()
             dataList.add(0, newItem)
             binding.tvEmpty.visibility = View.GONE
             adapter.notifyItemInserted(0)
@@ -324,10 +325,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 좋아요 개수, 이미지 업데이트 하는 부분
-    // 데이터 리스트 안에서 찾는다.
-    // 좋아요 개수가 바뀐 아이템이 뭔지를 찾아서(= 제목은 바뀌지 않으니(직접 수정을 하지 않는 이상) 그걸로 찾는다)
+    // 데이터 리스트 안에서 찾는다. 좋아요 개수가 바뀐 아이템이 뭔지를 찾아서(= 제목은 바뀌지 않으니(직접 수정을 하지 않는 이상) 그걸로 찾는다)
     // 맞는 아이템을 찾으면 그 아이템의 좋아요 개수, 이미지를 업데이트 한다.
-    // 근데 "dHeartCheck는 이미지가 아닌데?" 라는 의문을 가질 수 있지만 어댑터에서 이미지를 맞춰서 바꿔 준다. 걱정 NoNo
+    // 근데 "dHeartCheck는 이미지가 아닌데?" 라는 의문을 가질 수 있지만 어댑터에서 이미지를 맞춰서 바꿔 준다. 걱정 No
     // Detail Page에서 했던 건 Detail Page의 하트 이미지를 바꾸는 것이고, 우리 Main Page의 하트 이미지는 어댑터에 있으니... ㅋㅋㅋ
     private fun updateItem(dataList: MutableList<Item>, newItem: Item) {
         for (i in dataList.indices) {
@@ -339,12 +339,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 뒤로 가기 버튼 눌렀을 때 다이얼 로그 설정
-    // 왜 onBackPressed가 빨간 줄이 뜰까요..? 동작은 잘 되어서 상관은 없긴 하지만... ㅋㅋㅋ
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("종료")
-        builder.setMessage("정말 Apple Market을 종료하시겠습니까?")
+        builder.setMessage(R.string.finish_text)
         builder.setIcon(R.mipmap.ic_launcher)
 
         val listener = DialogInterface.OnClickListener { dialog, which ->

@@ -32,7 +32,7 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
         fun onLongClick(view: View, position: Int)
     }
 
-    // 두 변수를 설정하는데 각각 클릭 리스너들의 초기 값은 null = 한 번도 클릭 안 한 초기 상태   /   (잘 모르겠다.. ㅋㅋㅋ)
+    // 두 변수를 설정하는데 각각 클릭 리스너들의 초기 값은 null = 한 번도 클릭 안 한 초기 상태 (솔직히 잘 모르겠다.. ㅋㅋㅋ)
     var click: OnClick? = null
     var longClick: LongClick? = null
 
@@ -54,14 +54,15 @@ class MyAdapter(private val item: MutableList<Item>) : RecyclerView.Adapter<MyAd
 
         // 길게 클릭했을 때 클릭 리스너
         holder.itemView.setOnLongClickListener {
-            longClick?.onLongClick(it, position); true
+            longClick?.onLongClick(it, position); true                        // 여기 true랑 false의 차이는 뭔지 모르겠다.. ㅋㅋㅋ
         }
 
+        // 여기도 천 단위마다 콤마(,) 넣기
         var format = DecimalFormat("#,###")
         var price = item[position].dPrice
 
         // DataList에 있는 값을 Adapter에 넣어주기 시작
-        // 이것들을 묶어서 item_recycler_view.xml에 넣고, 그걸 RecyclerView로 MainActivity에 쭈욱 넣을 것이다.
+        // 이것들을 묶어서 item_recycler_view.xml에 넣고, 그걸 RecyclerView로 MainActivity에 쭈욱 넣을 것이다.     (맞는 지는 모르겠다..)
         holder.image.setImageResource(item[position].dImage)
         holder.mainText.text = item[position].dItemText
         holder.address.text = item[position].dAddress
