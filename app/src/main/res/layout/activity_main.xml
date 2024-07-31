@@ -44,11 +44,11 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/item_add_button"
-                android:clipToOutline="true"
                 android:paddingHorizontal="3dp"
                 android:text="@string/item_add_button_text"
                 app:layout_constraintStart_toEndOf="@id/iv_main_title_image"
                 tools:ignore="MissingConstraints" />
+<!--                android:clipToOutline="true"-->
 
             <ImageView
                 android:id="@+id/iv_main_title_alarm"

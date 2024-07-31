@@ -16,7 +16,7 @@ class DetailActivity : AppCompatActivity() {
     private val binding by lazy { ActivityDetailBinding.inflate(layoutInflater) }
 
     companion object {
-        const val ITEM = "item"
+        const val EXTRA_ITEM = "item"
     }
 
     @SuppressLint("SetTextI18n")
@@ -31,27 +31,38 @@ class DetailActivity : AppCompatActivity() {
         }
 
         // DataList를 MainActivity 에서 받아옴
-        val item = intent.getParcelableExtra<Item>(ITEM)
+        val item = intent.getParcelableExtra<Item>(EXTRA_ITEM) ?: return
 
         // 천 단위로 콤마(,) 넣기
         val format = DecimalFormat("#,###")
-        val price = item?.dPrice
+        val price = item.dPrice
 
         // 그 받아온 DataList 에서 값을 꺼내서 각각의 위젯에 적용
-        binding.ivDetailImage.setImageResource(item?.dImage ?: 0)
-        binding.tvDetailName.text = item?.dName
-        binding.tvDetailAddress.text = item?.dAddress
-        binding.tvDetailTitle.text = item?.dItemText
-        binding.tvDetailMessage.text = item?.dMessage
-        binding.tvDetailPrice.text = "${format.format(price)}원"
+        with(binding) {
+            ivDetailImage.setImageResource(item.dImage ?: 0)
+            tvDetailName.text = item.dName
+            tvDetailAddress.text = item.dAddress
+            tvDetailTitle.text = item.dItemText
+            tvDetailPrice.text = "${format.format(price)}원"
+            tvDetailMessage.text = item.dMessage
+        }
+//        binding.ivDetailImage.setImageResource(item?.dImage ?: 0)
+//        binding.tvDetailName.text = item?.dName
+//        binding.tvDetailAddress.text = item?.dAddress
+//        binding.tvDetailTitle.text = item?.dItemText
+//        binding.tvDetailMessage.text = item?.dMessage
+//        binding.tvDetailPrice.text = "${format.format(price)}원"
 
         // Main에서 좋아요가 빈 하트인 상태로(false) 넘어오면 기본 하트 상태는 빈 하트
         // 빨간 하트 상태로(true) 넘어오면 기본 하트 상태도 빨간 하트
-        if (!item!!.dHeartCheck) {
-            binding.ivBottomHeart.setImageResource(R.drawable.heart)
-        } else {
-            binding.ivBottomHeart.setImageResource(R.drawable.heart_full)
-        }
+        binding.ivBottomHeart.setImageResource(
+            if (item.dHeartCheck) R.drawable.heart_full else R.drawable.heart
+        )
+//        if (!item!!.dHeartCheck) {
+//            binding.ivBottomHeart.setImageResource(R.drawable.heart)
+//        } else {
+//            binding.ivBottomHeart.setImageResource(R.drawable.heart_full)
+//        }
 
         // 좋아요 버튼을 눌렀을 때 좋아요 버튼 이미지, 좋아요 수를 결정 하는 부분
         // 왜 if문 안에 !를 조건 앞에 붙여주었냐면.. Main에서 넘어온 하트 이미지를 안 누른 빈 하트 상태가 false 상태인데 거기서 이미지를 눌러서 true로 만들고, 빨간 하트로 바꾸기 때문이다.
@@ -74,7 +85,7 @@ class DetailActivity : AppCompatActivity() {
         // 그냥 뒤(= MainActivity)로 가기만 하면 된다. 그래서 RegisterForActivityResult가 있는 것이다.
         binding.ivBackButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(ITEM, item)
+            intent.putExtra(EXTRA_ITEM, item)
             setResult(RESULT_OK, intent)
             finish()
         }

@@ -2,8 +2,12 @@ package com.example.applemarket
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.media.AudioAttributes
@@ -20,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,12 +35,14 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     // DataList, RecyclerView Adapter에 대한 변수 선언
-    private val dataList by lazy { mutableListOf<Item>() }
+//    private val dataList by lazy { DataListManager.dataList(this) }
     private val adapter by lazy { MyAdapter(dataList) }
+    private val dataListManager by lazy { DataListManager.getInstance(this) }
+    private val dataList by lazy { dataListManager.getDataList().toMutableList() }
 
     // intent를 사용하기 위해 선언하는 변수
     companion object {
-        const val ITEM = "item"
+        const val EXTRA_ITEM = "item"
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -48,128 +55,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        // DataList에 초기 데이터 원본을 추가
-        dataList.add(
-            Item(
-                R.drawable.sample1,
-                getString(R.string.sample1_title),
-                getString(R.string.sample1_address),
-                1000,
-                25,
-                13,
-                getString(R.string.sample_1_name),
-                getString(R.string.sample_1_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample2,
-                getString(R.string.sample2_title),
-                getString(R.string.sample2_address),
-                20000,
-                28,
-                8,
-                getString(R.string.sample_2_name),
-                getString(R.string.sample_2_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample3,
-                getString(R.string.sample3_title),
-                getString(R.string.sample3_address),
-                10000,
-                5,
-                23,
-                getString(R.string.sample_3_name),
-                getString(R.string.sample_3_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample4,
-                getString(R.string.sample4_title),
-                getString(R.string.sample4_address),
-                10000,
-                17,
-                14,
-                getString(R.string.sample_4_name),
-                getString(R.string.sample_4_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample5,
-                getString(R.string.sample5_title),
-                getString(R.string.sample5_address),
-                150000,
-                9,
-                22,
-                getString(R.string.sample_5_name),
-                getString(R.string.sample_5_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample6,
-                getString(R.string.sample6_title),
-                getString(R.string.sample6_address),
-                50000,
-                16,
-                25,
-                getString(R.string.sample_6_name),
-                getString(R.string.sample_6_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample7,
-                getString(R.string.sample7_title),
-                getString(R.string.sample7_address),
-                150000,
-                54,
-                142,
-                getString(R.string.sample_7_name),
-                getString(R.string.sample_7_message),
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample8,
-                getString(R.string.sample8_title),
-                getString(R.string.sample8_address),
-                180000,
-                7,
-                31,
-                getString(R.string.sample_8_name),
-                getString(R.string.sample_8_message)
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample9,
-                getString(R.string.sample9_title),
-                getString(R.string.sample9_address),
-                30000,
-                28,
-                7,
-                getString(R.string.sample_9_name),
-                getString(R.string.sample_9_message),
-            )
-        )
-        dataList.add(
-            Item(
-                R.drawable.sample10,
-                getString(R.string.sample10_title),
-                getString(R.string.sample10_address),
-                190000,
-                6,
-                40,
-                getString(R.string.sample_10_name),
-                getString(R.string.sample_10_message)
-            )
-        )
 
         // Adapter, RecyclerView 연결
         with(binding) {
@@ -184,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         val resultValue =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    val item = result.data?.getParcelableExtra<Item>(ITEM)
+                    val item = result.data?.getParcelableExtra<Item>(EXTRA_ITEM)
                     if (item != null) {
                         updateItem(dataList, item)
                         adapter.notifyDataSetChanged()         // Adapter 모든 데이터 업데이트
@@ -196,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         adapter.click = object : MyAdapter.OnClick {
             override fun onClick(view: View, position: Int) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra(ITEM, dataList[position])                                          // 원본 데이터 리스트를 보냄
+                intent.putExtra(EXTRA_ITEM, dataList[position])                                          // 원본 데이터 리스트를 보냄
                 resultValue.launch(intent)
             }
         }
@@ -205,7 +90,7 @@ class MainActivity : AppCompatActivity() {
         adapter.longClick = object : MyAdapter.LongClick {
             override fun onLongClick(view: View, position: Int) {
                 val builder = AlertDialog.Builder(this@MainActivity)
-                builder.setTitle("삭제")
+                builder.setTitle(R.string.delete_dialog_title)
                 builder.setMessage(R.string.delete_text)
                 builder.setIcon(R.mipmap.ic_launcher)
 
@@ -217,14 +102,16 @@ class MainActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT).show()                              // 아이템을 잘 맞게 삭제했는지에 대한 여부를 토스트 메세지로 확인을 시켜 주는 부분
 
                             dataList.removeAt(position)                                 // 데이터 리스트에서 해당 포지션에 맞는 아이템을 지움
-                            adapter.notifyItemRemoved(position)                         // 어댑터의 아이템도 해당되는 포지션에 맞는 걸로 지움
+//                            adapter.notifyItemRemoved(position)                         // 어댑터의 아이템도 해당되는 포지션에 맞는 걸로 지움
                             adapter.notifyDataSetChanged()                              // 삭제 하고 나면 전체 데이터 업데이트
 
-                            if (dataList.isEmpty()) {                                   // 모든 아이템이 삭제 되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
-                                binding.tvEmpty.visibility = View.VISIBLE
-                            } else {
-                                binding.tvEmpty.visibility = View.GONE
-                            }
+                            binding.tvEmpty.isVisible = dataList.isEmpty()
+
+//                            if (dataList.isEmpty()) {                                   // 모든 아이템이 삭제 되면 "모든 항목이 삭제되었습니다"라고 써있는 TextView 보이게 설정
+//                                binding.tvEmpty.visibility = View.VISIBLE
+//                            } else {
+//                                binding.tvEmpty.visibility = View.GONE
+//                            }
                         }
 
                         // 아니오 버튼 누르면 그냥 다이얼 로그만 종료
@@ -232,8 +119,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                builder.setPositiveButton("예", listener)
-                builder.setNegativeButton("아니오", listener)
+                builder.setPositiveButton(R.string.dialog_yes_button, listener)
+                builder.setNegativeButton(R.string.dialog_no_button, listener)
 
                 builder.show()
             }
@@ -242,42 +129,7 @@ class MainActivity : AppCompatActivity() {
         // 알림 설정 하는 부분.. 여기는 아직 더 공부가 필요하다.
         // 알림 소리 안 들리게 하려면 어떻게 해야 할까요..?
         binding.ivMainTitleAlarm.setOnClickListener {
-            val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-            val builder: NotificationCompat.Builder
-
-            // 채널 생성
-            val channelId = "channel"
-            val channelName = "My Channel"
-            val channel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT                                                    // 여기는 중요도 설정.. HIGH로 해도 상관은 없지만 일단 DEFAULT로 설정
-            ).apply {
-                description = "My Channel One Description"                                                // 이건 뭔지 모르겠다.. ㅋㅋㅋ
-                setShowBadge(true)                                                                        // 배지 설정 (알림 하나씩 쌓일 때마다 아이콘 위에 숫자 뜨게)
-
-                val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)            // 알림 소리를 기본 소리로 설정
-
-                // 그 기본 알림 소리의 속성을 설정
-                val audioAttributes = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .build()
-                setSound(uri, audioAttributes)                                                             // 알림 소리를 uri와 audioAttributes 변수에 설정한 소리로 한다는 뜻(?)
-                enableVibration(true)                                                              // 알림 올 때 진동 발생 여부 -> true
-            }
-
-            manager.createNotificationChannel(channel)                                                     // 만든 채널 등록
-            builder = NotificationCompat.Builder(this, channelId)                                   // builder 생성
-
-            // builder 설정. 여기선 알림에 무슨 내용이 들어갈 지 정하는 것이다.
-            builder.setSmallIcon(R.mipmap.ic_launcher)
-            builder.setWhen(System.currentTimeMillis())                                                     // 알림 시간 -> 현재 시간 설정
-            builder.setContentTitle("키워드 알림")
-            builder.setContentText(R.string.alarm_text.toString())                                          // 이건 왜 .toString()일까요..?
-
-            manager.notify(11, builder.build())                                                          // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
+            alarm()
         }
 
         // floating button 설정 부분
@@ -288,25 +140,30 @@ class MainActivity : AppCompatActivity() {
         var top = true
 
         // RecyclerView가 스크롤 되었을 때 설정이다.
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!binding.recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {    // 스크롤이 멈춰 있고, 위치가 최상단일 경우. 항상 최상단부터 스크롤을 하니 이 상태가 기본이다.
-                    floatingButton.startAnimation(outAnimation)                                                                // 페이드 아웃(= 점점 투명해진다) 적용
-                    floatingButton.visibility = View.GONE                                                                      // 버튼을 완전히 숨김
-                    top = true
+        with(binding) {
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    if (!binding.recyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {    // 스크롤이 멈춰 있고, 위치가 최상단일 경우. 항상 최상단부터 스크롤을 하니 이 상태가 기본이다.
+                        floatingButton.startAnimation(outAnimation)                                                                // 페이드 아웃(= 점점 투명해진다) 적용
+                        floatingButton.visibility =
+                            View.GONE                                                                      // 버튼을 완전히 숨김
+                        top = true
 
-                } else {                                                                                                       // 이제부터 스크롤 시작
-                    if (top) {
-                        floatingButton.startAnimation(inAnimation)                                                             // 페이드 인(= 점점 불투명해진다) 적용
-                        floatingButton.visibility = View.VISIBLE                                                               // top이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
-                        floatingButton.setOnClickListener {                                                                    // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
-                            binding.recyclerView.smoothScrollToPosition(0)
+                    } else {                                                                                                       // 이제부터 스크롤 시작
+                        if (top) {
+                            floatingButton.startAnimation(inAnimation)                                                             // 페이드 인(= 점점 불투명해진다) 적용
+                            floatingButton.visibility =
+                                View.VISIBLE                                                               // top이 true일 때 스크롤을 한다. 그 때 버튼을 보이게 한다.
+                            floatingButton.setOnClickListener {                                                                    // floating button 누르면 최상단으로 이동 (= 0번 position 위치로 이동을 한다)
+                                recyclerView.smoothScrollToPosition(0)
+                            }
+                            top =
+                                false                                                                                          // false로 top을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
                         }
-                        top = false                                                                                          // false로 top을 바꿈(= 최상단으로 올라가고, 스크롤이 멈추면 다시 true가 됨)
                     }
                 }
-            }
-        })
+            })
+        }
 
         // 아이템을 추가할 때 쓸 Sample Data
         val newItem = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
@@ -316,12 +173,51 @@ class MainActivity : AppCompatActivity() {
         // 아이템을 전부 삭제하고 추가 버튼을 누르면 빈 RecyclerView에 item1을 추가
         // notifyItemInserted가 그걸 도와준다... (처음 알았네요)
         binding.addButton.setOnClickListener {
-            Toast.makeText(this, R.string.iten_plus_text, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.item_plus_text, Toast.LENGTH_SHORT).show()
             binding.tvEmpty.visibility = View.GONE
             dataList.add(0, newItem)
             adapter.notifyItemInserted(0)
             adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun alarm () {
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val builder: NotificationCompat.Builder
+
+        // 채널 생성
+        val channelId = "channel"
+        val channelName = "My Channel"
+        val channel = NotificationChannel(
+            channelId,
+            channelName,
+            NotificationManager.IMPORTANCE_DEFAULT                                                    // 여기는 중요도 설정.. HIGH로 해도 상관은 없지만 일단 DEFAULT로 설정
+        ).apply {
+            description = "My Channel One Description"                                                // 이건 뭔지 모르겠다.. ㅋㅋㅋ
+            setShowBadge(true)                                                                        // 배지 설정 (알림 하나씩 쌓일 때마다 아이콘 위에 숫자 뜨게)
+
+            val uri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)            // 알림 소리를 기본 소리로 설정
+
+            // 그 기본 알림 소리의 속성을 설정
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build()
+            setSound(uri, audioAttributes)                                                             // 알림 소리를 uri와 audioAttributes 변수에 설정한 소리로 한다는 뜻(?)
+            enableVibration(true)                                                              // 알림 올 때 진동 발생 여부 -> true
+        }
+
+        manager.createNotificationChannel(channel)                                                     // 만든 채널 등록
+        builder = NotificationCompat.Builder(this, channelId)                                   // builder 생성
+
+//        // builder 설정. 여기선 알림에 무슨 내용이 들어갈 지 정하는 것이다.
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setWhen(System.currentTimeMillis())                                                     // 알림 시간 -> 현재 시간 설정
+        builder.setContentTitle("키워드 알림")
+        builder.setContentText("설정한 키워드에 대한 알림이 도착했습니다!!")                                          // 이건 왜 .toString()일까요..?
+
+        manager.notify(11, builder.build())                                                          // ivMainTitleAlarm 버튼을 눌렀을 때 알림 실행
     }
 
     // 좋아요 개수, 이미지 업데이트 하는 부분
@@ -330,11 +226,17 @@ class MainActivity : AppCompatActivity() {
     // 근데 "dHeartCheck는 이미지가 아닌데?" 라는 의문을 가질 수 있지만 어댑터에서 이미지를 맞춰서 바꿔 준다. 걱정 No
     // Detail Page에서 했던 건 Detail Page의 하트 이미지를 바꾸는 것이고, 우리 Main Page의 하트 이미지는 어댑터에 있으니... ㅋㅋㅋ
     private fun updateItem(dataList: MutableList<Item>, newItem: Item) {
-        for (i in dataList.indices) {
-            if (dataList[i].dItemText == newItem.dItemText) {
-                dataList[i].dHeart = newItem.dHeart
-                dataList[i].dHeartCheck = newItem.dHeartCheck
-            }
+//        for (i in dataList.indices) {
+//            if (dataList[i].dItemText == newItem.dItemText) {
+//                dataList[i].dHeart = newItem.dHeart
+//                dataList[i].dHeartCheck = newItem.dHeartCheck
+//            }
+//        }
+
+        val item = dataList.find { it.dItemText == newItem.dItemText }
+        item?.apply {
+            dHeart = newItem.dHeart
+            dHeartCheck = newItem.dHeartCheck
         }
     }
 
@@ -342,7 +244,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("종료")
+        builder.setTitle(R.string.finish_dialog_title)
         builder.setMessage(R.string.finish_text)
         builder.setIcon(R.mipmap.ic_launcher)
 
@@ -353,8 +255,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        builder.setPositiveButton("예", listener)
-        builder.setNegativeButton("아니오", listener)
+        builder.setPositiveButton(R.string.dialog_yes_button, listener)
+        builder.setNegativeButton(R.string.dialog_no_button, listener)
         builder.setOnCancelListener {}                                                   // 다이얼 로그 띄우기 전에 앱이 종료 되지 않게 설정
 
         builder.show()

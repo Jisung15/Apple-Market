@@ -79,7 +79,7 @@
 
     <string name="button_message">채팅하기</string>
 
-    <string name="tv_show_detail_button">더보기</string>
+<!--    <string name="tv_show_detail_button">더보기</string>-->
 
     <string name="empty">모든 항목이 삭제되었습니다.</string>
 
@@ -91,9 +91,13 @@
     </string>
 
     <string name="finish_text">정말 Apple Market을 종료하시겠습니까?</string>
+    <string name="finish_dialog_title">종료</string>
+    <string name="delete_dialog_title">삭제</string>
     <string name="delete_text">정말로 이 상품을 삭제하시겠습니까?</string>
-    <string name="iten_plus_text">상품이 추가되었습니다.</string>
-    <string name="alarm_text">설정한 키워드에 대한 알림이 도착했습니다!!</string>
+    <string name="item_plus_text">상품이 추가되었습니다.</string>
+
+    <string name="dialog_yes_button">예</string>
+    <string name="dialog_no_button">아니오</string>
 
     <string name="item_add_button_text">아이템 추가</string>
 </resources>
