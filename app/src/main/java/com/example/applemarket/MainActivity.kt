@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 아이템을 추가할 때 쓸 Sample Data
-        val newItem = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_adress), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
+        val newItem = Item(R.drawable.camp_icon, getString(R.string.item1_text), getString(R.string.item1_address), 0, 40, 1000, getString(R.string.item1_name), getString(R.string.item1_message))
 
         // 그 Sample Data(=Item 객체 형태의 데이터들)를 버튼 누르면 아이템에 추가하게 하고, 그 아이템(= newItem)을 RecyclerView 맨 위에 추가하는 코드
         // 버튼 넣을 공간이 없어서 타이틀의 아래 화살표 ImageView옆에 넣어두었습니다.
